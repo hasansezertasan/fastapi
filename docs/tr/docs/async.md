@@ -1,12 +1,12 @@
-# Concurrency ve async / await
+# Eşzamanlılık ve async / await
 
-*path operasyon fonksiyonu* için `async def `sözdizimi,  asenkron kod, eşzamanlılık ve paralellik hakkında bazı ayrıntılar.
+*yol operasyon fonksiyonu* için `async def` sözdizimi, asenkron kod, eşzamanlılık ve paralellik hakkında bazı ayrıntılar.
 
-## Aceleniz mi var?
+## Aceleniz mi Var?
 
-<abbr title="too long; didn't read"><strong>TL;DR:</strong></abbr>
+<abbr title="too long; didn't read: Çok uzun; okumadım"><strong>TL;DR:</strong></abbr>
 
-Eğer `await` ile çağrılması gerektiğini belirten üçüncü taraf kütüphaneleri kullanıyorsanız, örneğin:
+Eğer aşağıdaki gibi `await` ile çağrılması gerektiğini belirten üçüncü parti kütüphaneleri kullanıyorsanız:
 
 ```Python
 results = await some_library()
@@ -90,16 +90,13 @@ Bunun yerine, "asenkron" bir sistem olarak, bir kez bittiğinde,  bilgisayarın 
 
 "Senkron" ("asenkron"un aksine) için genellikle "sıralı" terimini de kullanırlar, çünkü bilgisayar/program, bu adımlar beklemeyi içerse bile, farklı bir göreve geçmeden önce tüm adımları sırayla izler.
 
-
 ### Eşzamanlılık (Concurrency) ve Burgerler
-
 
 Yukarıda açıklanan bu **asenkron** kod fikrine bazen **"eşzamanlılık"** da denir. **"Paralellikten"** farklıdır.
 
 **Eşzamanlılık** ve **paralellik**, "aynı anda az ya da çok olan farklı işler" ile ilgilidir.
 
 Ancak *eşzamanlılık* ve *paralellik* arasındaki ayrıntılar oldukça farklıdır.
-
 
 Farkı görmek için burgerlerle ilgili aşağıdaki hikayeyi hayal edin:
 
@@ -370,7 +367,7 @@ FastAPI'ye (Starlette aracılığıyla) güç veren ve bu kadar etkileyici bir p
 
     Biraz teknik bilginiz varsa (co-routines, threads, blocking, vb)ve FastAPI'nin "async def" ile normal "def" arasındaki farkı nasıl işlediğini merak ediyorsanız, devam edin.
 
-### Path fonksiyonu
+### Yol Operasyonu Fonksiyonları
 
 "async def" yerine normal "def" ile bir *yol işlem işlevi* bildirdiğinizde, doğrudan çağrılmak yerine (sunucuyu bloke edeceğinden) daha sonra beklenen harici bir iş parçacığı havuzunda çalıştırılır.
 
@@ -378,15 +375,15 @@ Yukarıda açıklanan şekilde çalışmayan başka bir asenkron framework'den g
 
 Yine de, her iki durumda da, **FastAPI**'nin önceki frameworkden [hala daha hızlı](/#performance){.internal-link target=_blank} (veya en azından karşılaştırılabilir) olma olasılığı vardır.
 
-### Bagımlılıklar
+### Bağımlılıklar
 
 Aynısı bağımlılıklar için de geçerlidir. Bir bağımlılık, "async def" yerine standart bir "def" işleviyse, harici iş parçacığı havuzunda çalıştırılır.
 
-### Alt-bağımlıklar
+### Alt Bağımlıklar
 
 Birbirini gerektiren (fonksiyonlarin parametreleri olarak) birden fazla bağımlılık ve alt bağımlılıklarınız olabilir, bazıları 'async def' ve bazıları normal 'def' ile oluşturulabilir. Yine de normal 'def' ile oluşturulanlar, "await" kulanilmadan harici bir iş parçacığında (iş parçacığı havuzundan) çağrılır.
 
-### Diğer yardımcı fonksiyonlar
+### Diğer Yardımcı Fonksiyonlar
 
 Doğrudan çağırdığınız diğer herhangi bir yardımcı fonksiyonu, normal "def" veya "async def" ile tanimlayabilirsiniz. FastAPI onu çağırma şeklinizi etkilemez.
 
