@@ -1,6 +1,6 @@
 # Eşzamanlılık ve async / await
 
-*yol operasyon fonksiyonu* için `async def` sözdizimi, asenkron kod, eşzamanlılık ve paralellik hakkında bazı ayrıntılar.
+*Yol operasyonu fonksiyonları* için `async def` sözdizimi hakkında ayrıntılar ve asenkron kod, eşzamanlılık ve paralellik hakkında bazı temel bilgiler.
 
 ## Aceleniz mi Var?
 
@@ -12,7 +12,7 @@ Eğer aşağıdaki gibi `await` ile çağrılması gerektiğini belirten üçün
 results = await some_library()
 ```
 
-O zaman *path operasyon fonksiyonunu* `async def` ile tanımlayın örneğin:
+O zaman *yol operasyonu fonksiyonunuzu* `async def` ile aşağıdaki gibi tanımlayın:
 
 ```Python hl_lines="2"
 @app.get('/')
@@ -26,7 +26,7 @@ async def read_results():
 
 ---
 
-Eğer bir veritabanı, bir API, dosya sistemi vb. ile iletişim kuran bir üçüncü taraf bir kütüphane kullanıyorsanız ve `await` kullanımını desteklemiyorsa, (bu şu anda çoğu veritabanı kütüphanesi için geçerli bir durumdur), o zaman *path operasyon fonksiyonunuzu* `def` kullanarak normal bir şekilde tanımlayın, örneğin:
+Eğer bir veritabanı, bir API, dosya sistemi vb. ile iletişim kuran bir üçüncü parti kütüphane kullanıyorsanız ve `await` kullanımını desteklemiyorsa, (bu şu anda çoğu veritabanı kütüphanesi için geçerli bir durumdur), o zaman *yol operasyonu fonksiyonunuzu* normal bir şekilde `def` kullanarak aşağıdaki gibi tanımlayın:
 
 ```Python hl_lines="2"
 @app.get('/')
@@ -41,27 +41,27 @@ Eğer uygulamanız (bir şekilde) başka bir şeyle iletişim kurmak ve onun cev
 
 ---
 
-Sadece bilmiyorsanız, normal `def` kullanın.
+Eğer bilmiyorsanız, normal `def` kullanabilirsiniz.
 
 ---
 
-**Not**: *path operasyon fonksiyonlarınızda* `def` ve `async def`'i ihtiyaç duyduğunuz gibi karıştırabilir ve her birini sizin için en iyi seçeneği kullanarak tanımlayabilirsiniz. FastAPI onlarla doğru olanı yapacaktır.
+**Not**: *yol operasyon fonksiyonlarınızda* `def` ve `async def`'i ihtiyaç duyduğunuz gibi karıştırabilir ve her birini sizin için en iyi seçeneği kullanarak tanımlayabilirsiniz. FastAPI onlarla doğru olanı yapacaktır.
 
-Her neyse, yukarıdaki durumlardan herhangi birinde, FastAPI yine de asenkron olarak çalışacak ve son derece hızlı olacaktır.
+Sonuç olarak, yukarıdaki durumlardan herhangi birinde, FastAPI yine de asenkron olarak çalışacak ve son derece hızlı olacaktır.
 
 Ancak yukarıdaki adımları takip ederek, bazı performans optimizasyonları yapılabilecektir.
 
 ## Teknik Detaylar
 
-Python'un modern versiyonlarında **`async` ve `await`** sözdizimi ile **"coroutines"**  kullanan **"asenkron kod"** desteğine sahiptir.
+Python'un modern versiyonları **`async` ve `await`** sözdizimi ile **"coroutines"** adında bir şeyi kullanarak **"asenkron kod"** desteğini bizlere sunar.
 
-Bu ifadeyi aşağıdaki bölümlerde daha da ayrıntılı açıklayalım:
+Bu ifadeyi parçalara ayırıp aşağıdaki bölümlerde daha iyi bir şekilde anlayalım:
 
 * **Asenkron kod**
 * **`async` ve `await`**
 * **Coroutines**
 
-## Asenkron kod
+## Asenkron Kod
 
 Asenkron kod programlama dilinin 💬 bilgisayara / programa 🤖 kodun bir noktasında, *başka bir kodun* bir yerde bitmesini 🤖 beklemesi gerektiğini söylemenin bir yoludur. Bu *başka koda* "slow-file" denir 📝.
 
@@ -82,11 +82,11 @@ Bu "başka bir şey için bekle" normalde, aşağıdakileri beklemek gibi (işle
 * sonuçları döndürmek için bir veritabanı sorgusu
 * vb.
 
-Yürütme süresi çoğunlukla  <abbr title="Input ve Output (Giriş ve Çıkış)">I/O</abbr> işlemleri beklenerek tüketildiğinden bunlara "I/O bağlantılı" işlemler denir.
+Yürütme süresi çoğunlukla <abbr title="Input ve Output (Giriş ve Çıkış)">I/O</abbr> işlemleri beklenerek tüketildiğinden bunlara "I/O bağlantılı" işlemler denir.
 
 Buna "asenkron" denir, çünkü bilgisayar/program yavaş görevle "senkronize" olmak zorunda değildir, görevin tam olarak biteceği anı bekler, hiçbir şey yapmadan, görev sonucunu alabilmek ve çalışmaya devam edebilmek için .
 
-Bunun yerine, "asenkron" bir sistem olarak, bir kez bittiğinde,  bilgisayarın / programın yapması gerekeni bitirmesi için biraz (birkaç mikrosaniye) sırada bekleyebilir ve ardından sonuçları almak için geri gelebilir ve onlarla çalışmaya devam edebilir.
+Bunun yerine, "asenkron" bir sistem olarak, bir kez bittiğinde, bilgisayarın / programın yapması gerekeni bitirmesi için biraz (birkaç mikrosaniye) sırada bekleyebilir ve ardından sonuçları almak için geri gelebilir ve onlarla çalışmaya devam edebilir.
 
 "Senkron" ("asenkron"un aksine) için genellikle "sıralı" terimini de kullanırlar, çünkü bilgisayar/program, bu adımlar beklemeyi içerse bile, farklı bir göreve geçmeden önce tüm adımları sırayla izler.
 
@@ -102,17 +102,21 @@ Farkı görmek için burgerlerle ilgili aşağıdaki hikayeyi hayal edin:
 
 ### Eşzamanlı Burgerler
 
-<!-- Cinsiyetten bağımsız olan aşçı emojisi "🧑‍🍳" tarayıcılarda yeterince iyi görüntülenmiyor. Bu yüzden erken "👨‍🍳" ve kadın "👩‍🍳" aşçıları karışık bir şekilde kullanıcağım. -->
+Hoşlandığınız kişiyle birlikte fast food almaya gittiniz, kasiyer önünüzdeki insanların siparişlerini alırken sıraya girdiniz.
 
-Aşkınla beraber 😍 dışarı hamburger yemeye çıktınız 🍔, kasiyer 💁 öndeki insanlardan sipariş alırken siz sıraya girdiniz.
+<img src="/img/async/concurrent-burgers/concurrent-burgers-01.png" class="illustration">
 
-Sıra sizde ve sen aşkın 😍 ve kendin için 2 çılgın hamburger 🍔 söylüyorsun.
+Sıranız geldi, hoşlandığınız kişiye ve kendinize 2 adet cafcaflı burger siparişi veriyorsunuz. 🍔🍔
 
-Ödemeyi yaptın 💸.
+<img src="/img/async/concurrent-burgers/concurrent-burgers-02.png" class="illustration">
 
-Kasiyer 💁 mutfakdaki aşçıya 👨‍🍳 hamburgerleri 🍔 hazırlaması gerektiğini söyler ve aşçı bunu bilir (o an önceki müşterilerin siparişlerini hazırlıyor olsa bile).
+Kasiyer mutfaktaki aşçıya bir şeyler söylüyor, böylece hamburgerlerinizi hazırlamaları gerektiğini biliyorlar (her ne kadar şu anda önceki müşteriler siparişlerini hazırlıyor olsalar da).
 
-Kasiyer 💁 size bir sıra numarası verir.
+<img src="/img/async/concurrent-burgers/concurrent-burgers-03.png" class="illustration">
+
+Ödemeyi yaptın. 💸
+
+Kasiyer size bir sıra numarası verir.
 
 Beklerken askınla 😍 bir masaya oturur ve uzun bir süre konuşursunuz(Burgerleriniz çok çılgın olduğundan ve hazırlanması biraz zaman alıyor ✨🍔✨).
 
@@ -136,7 +140,7 @@ Ama hamburgerler 🍔 hazır olmamasına rağmen Kasiyer 💁 ile işiniz "durak
 
 Ama tezgahtan uzaklaşıp sıranız gelene kadarmasanıza dönebilir 🔀 ve dikkatinizi aşkınıza 😍 verebilirsiniz vr bunun üzerine "çalışabilirsiniz" ⏯ 🤓. Artık "üretken" birşey yapıyorsunuz 🤓, sevgilinle 😍 flört eder gibi.
 
-Kasiyer 💁  "Hamburgerler hazır !" 🍔 dediğinde ve görüntülenen numara sizin numaranız olduğunda hemen koşup hamburgerlerinizi almaya çalışmıyorsunuz. Biliyorsunuzki kimse sizin hamburgerlerinizi 🍔 çalmayacak çünkü sıra sizin.
+Kasiyer 💁 "Hamburgerler hazır !" 🍔 dediğinde ve görüntülenen numara sizin numaranız olduğunda hemen koşup hamburgerlerinizi almaya çalışmıyorsunuz. Biliyorsunuzki kimse sizin hamburgerlerinizi 🍔 çalmayacak çünkü sıra sizin.
 
 Yani Aşkınızın😍 hikayeyi bitirmesini bekliyorsunuz (çalışmayı bitir ⏯ / görev işleniyor.. 🤓), nazikçe gülümseyin ve hamburger yemeye gittiğinizi söyleyin ⏸.
 
