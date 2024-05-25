@@ -1,8 +1,8 @@
-# Run a Server Manually
+# Bir Sunucuyu El ile Çalıştırma
 
-## Use the `fastapi run` Command
+## `fastapi run` Komutunu Kullanın
 
-In short, use `fastapi run` to serve your FastAPI application:
+Özetle FastAPI uygulamanızı sunmak için `fastapi run` kullanın:
 
 <div class="termy">
 
@@ -50,43 +50,43 @@ $ <font color="#4E9A06">fastapi</font> run <u style="text-decoration-style:singl
 
 </div>
 
-That would work for most of the cases. 😎
+Çoğu durumda bu komutu kullanabilirsiniz. 😎
 
-You could use that command for example to start your **FastAPI** app in a container, in a server, etc.
+Bu komutu FastAPI uygulamanızı bir konteynerde, bir sunucuda vb. başlatmak için kullanabilirsiniz.
 
-## ASGI Servers
+## ASGI Sunucuları
 
-Let's go a little deeper into the details.
+Hadi detay denizinin biraz daha derinlerine inelim.
 
-FastAPI uses a standard for building Python web frameworks and servers called <abbr title="Asynchronous Server Gateway Interface">ASGI</abbr>. FastAPI is an ASGI web framework.
+FastAPI, Python web çerçeveleri ve sunucuları oluşturmak için bir standart olan <abbr title="Asynchronous Server Gateway Interface">ASGI</abbr> standardını kullanır. FastAPI, bir ASGI web çerçevesidir.
 
-The main thing you need to run a **FastAPI** application (or any other ASGI application) in a remote server machine is an ASGI server program like **Uvicorn**, this is the one that comes by default in the `fastapi` command.
+Bir **FastAPI** uygulamasını (veya başka bir ASGI uygulamasını) uzak bir sunucuda çalıştırmak için ihtiyacınız olan en temel şey, `fastapi` komutuyla varsayılan olarak gelen **Uvicorn** gibi bir ASGI sunucu programıdır.
 
-There are several alternatives, including:
+Birkaç alternatif bulunmaktadır, bunlar arasında:
 
-* <a href="https://www.uvicorn.org/" class="external-link" target="_blank">Uvicorn</a>: a high performance ASGI server.
-* <a href="https://pgjones.gitlab.io/hypercorn/" class="external-link" target="_blank">Hypercorn</a>: an ASGI server compatible with HTTP/2 and Trio among other features.
-* <a href="https://github.com/django/daphne" class="external-link" target="_blank">Daphne</a>: the ASGI server built for Django Channels.
+* <a href="https://www.uvicorn.org/" class="external-link" target="_blank">Uvicorn</a>: yüksek performanslı bir ASGI sunucusu.
+* <a href="https://pgjones.gitlab.io/hypercorn/" class="external-link" target="_blank">Hypercorn</a>: HTTP/2 ve Trio başta olmak üzere farklı özellikleri olan bir ASGI sunucusu.
+* <a href="https://github.com/django/daphne" class="external-link" target="_blank">Daphne</a>: Django Channels için inşa edilmiş ASGI sunucusu.
 
-## Server Machine and Server Program
+## Sunucu Makinesi ve Sunucu Programı
 
-There's a small detail about names to keep in mind. 💡
+İsimlerle ilgili küçük bir detayı aklınızda tutmanızda fayda var. 💡
 
-The word "**server**" is commonly used to refer to both the remote/cloud computer (the physical or virtual machine) and also the program that is running on that machine (e.g. Uvicorn).
+**Sunucu** kelimesi genellikle hem uzak/bulut bilgisayar (fiziksel veya sanal makine) hem de o makinede çalışan program (örneğin Uvicorn) için kullanılır.
 
-Just keep in mind that when you read "server" in general, it could refer to one of those two things.
+"Sunucu" kelimesiyle karşılaştığınızda, genellikle bu iki şeyden birine atıfta bulunulduğunu unutmayın.
 
-When referring to the remote machine, it's common to call it **server**, but also **machine**, **VM** (virtual machine), **node**. Those all refer to some type of remote machine, normally running Linux, where you run programs.
+Uzak makineden bahsederken genellikle **sunucu**, **makine**, **VM** (sanal makine), **düğüm** gibi ifadeler kullanılır. Bunlar genellikle Linux çalıştıran bir çeşit uzak makineye atıfta bulunur.
 
-## Install the Server Program
+## Sunucu Programını Kurun
 
-When you install FastAPI, it comes with a production server, Uvicorn, and you can start it with the `fastapi run` command.
+FastAPI'ı kurduğunuzda bir yayınlama sunucusu olan Uvicorn ile birlikte gelir ve `fastapi run` komutuyla çalıştırabilirsiniz.
 
-But you can also install an ASGI server manually:
+Bununla birlikte bir ASGI sunucusunu manuel olarak da kurabilirsiniz:
 
 === "Uvicorn"
 
-    * <a href="https://www.uvicorn.org/" class="external-link" target="_blank">Uvicorn</a>, a lightning-fast ASGI server, built on uvloop and httptools.
+    * <a href="https://www.uvicorn.org/" class="external-link" target="_blank">Uvicorn</a>, uvloop ve httptools üzerine inşa edilmiş çok hızlı bir ASGI sunucusudur.
 
     <div class="termy">
 
@@ -98,16 +98,16 @@ But you can also install an ASGI server manually:
 
     </div>
 
-    !!! tip
-        By adding the `standard`, Uvicorn will install and use some recommended extra dependencies.
+    !!! tip "İpucu"
+        `standard` etiketini kullandığınızda Uvicorn, bazı önerilen ek bağımlılıkları yükleyecek ve kullanacaktır.
 
-        That including `uvloop`, the high-performance drop-in replacement for `asyncio`, that provides the big concurrency performance boost.
+        Bu `asyncio` için yüksek performanslı bir alternatif olan `uvloop`'u içerir, bu da büyük bir eş zamanlılık performans artışı sağlar.
 
-        When you install FastAPI with something like `pip install fastapi` you already get `uvicorn[standard]` as well.
+        FastAPI'ı `pip install fastapi` gibi bir komut ile kurduğunuzda zaten `uvicorn[standard]`'ı da kurmuş olursunuz.
 
 === "Hypercorn"
 
-    * <a href="https://gitlab.com/pgjones/hypercorn" class="external-link" target="_blank">Hypercorn</a>, an ASGI server also compatible with HTTP/2.
+    * <a href="https://gitlab.com/pgjones/hypercorn" class="external-link" target="_blank">Hypercorn</a>, HTTP/2 ile uyumlu bir ASGI sunucusudur.
 
     <div class="termy">
 
@@ -119,11 +119,11 @@ But you can also install an ASGI server manually:
 
     </div>
 
-    ...or any other ASGI server.
+    ...veya başka bir ASGI sunucusu.
 
-## Run the Server Program
+## Sunucu Programını Çalıştırma
 
-If you installed an ASGI server manually, you would normally need to pass an import string in a special format for it to import your FastAPI application:
+Manuel olarak bir ASGI sunucusu kurduysanız, FastAPI uygulamanızı dahil etmek için özel bir formatta içe aktarma metini kullanmanız gerekir:
 
 === "Uvicorn"
 
@@ -149,36 +149,36 @@ If you installed an ASGI server manually, you would normally need to pass an imp
 
     </div>
 
-!!! note
-    The command `uvicorn main:app` refers to:
+!!! note "Not"
+    `uvicorn main:app` komutunu şu şekilde açıklayabiliriz:
 
-    * `main`: the file `main.py` (the Python "module").
-    * `app`: the object created inside of `main.py` with the line `app = FastAPI()`.
+    * `main`: dosya olan `main.py` (yani Python "modülü").
+    * `app`: ise `main.py` dosyasının içerisinde `app = FastAPI()` satırında oluşturduğumuz `FastAPI` nesnesi.
 
-    It is equivalent to:
+    Aşağıdaki satıra eşdeğerdir:
 
     ```Python
     from main import app
     ```
 
-!!! warning
-    Uvicorn and others support a `--reload` option that is useful during development.
+!!! warning "Uyarı"
+    Uvicorn ve diğerleri geliştirme sırasında kullanışlı olan bir `--reload` seçeneğini destekler.
 
-    The `--reload` option consumes much more resources, is more unstable, etc.
+    `--reload` seçeneği, daha fazla kaynak tüketir, daha kararsızdır, vb.
 
-    It helps a lot during **development**, but you **shouldn't** use it in **production**.
+    **Geliştirme** sırasında çok yardımcı olur, ancak **yayınlama** sürecinde kullanmamalısınız.
 
-## Hypercorn with Trio
+## Trio ile Hypercorn
 
-Starlette and **FastAPI** are based on <a href="https://anyio.readthedocs.io/en/stable/" class="external-link" target="_blank">AnyIO</a>, which makes them compatible with both Python's standard library <a href="https://docs.python.org/3/library/asyncio-task.html" class="external-link" target="_blank">asyncio</a> and <a href="https://trio.readthedocs.io/en/stable/" class="external-link" target="_blank">Trio</a>.
+Starlette ve **FastAPI**, Python'un standart kütüphanesi olan <a href="https://docs.python.org/3/library/asyncio-task.html" class="external-link" target="_blank">asyncio</a> ve <a href="https://trio.readthedocs.io/en/stable/" class="external-link" target="_blank">Trio</a> ile uyumlu hale getiren <a href="https://anyio.readthedocs.io/en/stable/" class="external-link" target="_blank">AnyIO</a> üzerine kuruludur.
 
-Nevertheless, Uvicorn is currently only compatible with asyncio, and it normally uses <a href="https://github.com/MagicStack/uvloop" class="external-link" target="_blank">`uvloop`</a>, the high-performance drop-in replacement for `asyncio`.
+Yine de Uvicorn şu anda yalnızca asyncio ile uyumludur ve genellikle `asyncio` için yüksek performanslı bir alternatif olan <a href="https://github.com/MagicStack/uvloop" class="external-link" target="_blank">`uvloop`</a>'u kullanır.
 
-But if you want to directly use **Trio**, then you can use **Hypercorn** as it supports it. ✨
+Eğer doğrudan **Trio** kullanmak istiyorsanız, **Hypercorn**'u kullanabilirsiniz. ✨
 
-### Install Hypercorn with Trio
+### Trio ile Hypercorn Kurulumu
 
-First you need to install Hypercorn with Trio support:
+Öncelikle Hypercorn'u Trio desteğiyle kurmanız gerekmektedir:
 
 <div class="termy">
 
@@ -189,9 +189,9 @@ $ pip install "hypercorn[trio]"
 
 </div>
 
-### Run with Trio
+### Trio ile Çalıştırma
 
-Then you can pass the command line option `--worker-class` with the value `trio`:
+`--worker-class` komut satırı seçeneğini `trio` değeriyle kullanabilirsiniz:
 
 <div class="termy">
 
@@ -201,21 +201,21 @@ $ hypercorn main:app --worker-class trio
 
 </div>
 
-And that will start Hypercorn with your app using Trio as the backend.
+Bu şekilde Hypercorn'u Trio ile kullanarak uygulamanızı çalıştırabilirsiniz. 🎉
 
-Now you can use Trio internally in your app. Or even better, you can use AnyIO, to keep your code compatible with both Trio and asyncio. 🎉
+Artık Trio'yu uygulamanızın içinde kullanabilirsiniz. Daha da iyisi, kodunuzu hem Trio hem de asyncio ile uyumlu tutmak için AnyIO'yu kullanabilirsiniz. 🎉
 
-## Deployment Concepts
+## Yayınlama Kavramları
 
-These examples run the server program (e.g Uvicorn), starting **a single process**, listening on all the IPs (`0.0.0.0`) on a predefined port (e.g. `80`).
+Bu örnekler, **tek bir işlem** başlatan sunucu programını (örneğin Uvicorn) çalıştırır ve belirli bir bağlantı noktasında (örneğin `80`) tüm IP'leri (`0.0.0.0`) dinler.
 
-This is the basic idea. But you will probably want to take care of some additional things, like:
+Temel fikir bu. Ancak aşağıdakiler gibi ek şeylerle ilgilenmek isteyebilirsiniz:
 
-* Security - HTTPS
-* Running on startup
-* Restarts
-* Replication (the number of processes running)
-* Memory
-* Previous steps before starting
+* Güvenlik - HTTPS
+* Başlangıçta çalıştırma
+* Yeniden başlatma
+* Yineleme (çalışan işlem sayısı)
+* Bellek
+* Çalıştırmadan önceki adımlar
 
-I'll tell you more about each of these concepts, how to think about them, and some concrete examples with strategies to handle them in the next chapters. 🚀
+İlerleyen bölümlerde, bu kavramların her biri hakkında daha fazla bilgi vereceğim, nasıl düşünülmesi gerektiği ve bunlarla başa çıkmak için stratejilerle ilgili bazı somut örnekler vereceğim. 🚀
